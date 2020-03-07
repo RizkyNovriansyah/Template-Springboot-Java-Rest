@@ -3,6 +3,7 @@ package com.belajar.template.rest;
 import com.belajar.template.model.ModelAnggota;
 import com.belajar.template.service.ServiceAnggota;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -61,5 +62,15 @@ public class RestAnggota {
         anggotaBaru.setAktif(1);
         serviceAnggota.save(anggotaBaru);
         return serviceAnggota.findAll();
+    }
+
+    //{"idJabatan":"1","nama":"lohya123","username":"lohya123","password":"lohya123", "aktif":"1"}
+    //Content-Type : application/json; charset=utf-8
+    //http://localhost:8080/rest/anggota/addNew
+    @RequestMapping(value = "/addNew", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public String addNew(@RequestBody ModelAnggota modelAnggota) {
+        System.out.println("body : " + modelAnggota.toString());
+        serviceAnggota.save(modelAnggota);
+        return "berhasil";
     }
 }
